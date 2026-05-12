@@ -104,8 +104,19 @@ export default function Home() {
       <div className="max-w-3xl mx-auto space-y-8 relative z-10 animate-in fade-in duration-500">
         
         <header className="border-b border-white/10 pb-6 flex justify-between items-end">
-          <h1 className="text-3xl font-semibold text-white tracking-tight">Pyrrho</h1>
-          <span className="text-[10px] text-gray-500 uppercase tracking-widest">Active Session</span>
+          <div className="flex items-center gap-3">
+            {/* Custom Pyrrho Logo: The Skeptic's Lens */}
+            <div className="relative w-8 h-8 flex items-center justify-center">
+              <div className="absolute inset-0 border-2 border-[#97144d] rounded-full opacity-50"></div>
+              <div className="w-4 h-4 bg-[#97144d] rounded-full shadow-[0_0_12px_rgba(151,20,77,0.8)]"></div>
+              <div className="absolute top-0 right-0 w-2 h-2 bg-white rounded-full"></div>
+            </div>
+            <div>
+              <h1 className="text-3xl font-semibold text-white tracking-tight leading-none">Pyrrho</h1>
+              <p className="text-[9px] text-[#97144d] uppercase tracking-[0.2em] font-bold mt-1">Skeptic Engine</p>
+            </div>
+          </div>
+          <span className="text-[10px] text-gray-500 uppercase tracking-widest pb-1">Active Session</span>
         </header>
         
         {!data ? (
