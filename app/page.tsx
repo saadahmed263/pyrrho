@@ -55,7 +55,7 @@ export default function Home() {
       <main className="min-h-screen flex items-center justify-center bg-[#050505] text-gray-200 p-6 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#97144d]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div className="max-w-xl space-y-8 animate-in fade-in zoom-in duration-700 relative z-10">
+        <div className="max-w-xl space-y-8 relative z-10 animate-in fade-in zoom-in duration-700">
           <div className="space-y-1">
             <h1 className="text-4xl font-semibold text-white tracking-tight">Pyrrho</h1>
             <p className="text-[#97144d] font-medium tracking-wide text-sm uppercase">Behavioral Psych Engine</p>
@@ -88,7 +88,7 @@ export default function Home() {
 
           <button 
             onClick={() => setShowSplash(false)}
-            className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all shadow-[0_0_20px_rgba(151,20,77,0.3)]"
+            className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all"
           >
             Initialize Engine
           </button>
@@ -98,27 +98,21 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] text-gray-200 font-sans p-4 md:p-12 relative">
+    <main className="min-h-screen bg-[#050505] text-gray-200 font-sans p-4 md:p-12 relative overflow-x-hidden">
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[300px] bg-[#97144d]/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
-      <div className="max-w-3xl mx-auto space-y-8 relative z-10 animate-in fade-in duration-500">
+      <div className="max-w-3xl mx-auto space-y-8 relative z-10">
         
        <header className="relative z-50 border-b border-white/10 pb-6 flex justify-between items-end">
           <div className="flex items-center gap-4">
-            {/* THE SKEPTIC LENS - LOGO */}
-            <div className="relative w-10 h-10">
-              {/* Outer ring */}
-              <div className="absolute inset-0 border-2 border-[#97144d] rounded-full opacity-20"></div>
-              {/* Middle ring */}
-              <div className="absolute inset-1.5 border border-[#97144d]/40 rounded-full animate-pulse"></div>
-              {/* Inner pupil */}
-              <div className="absolute inset-[13px] bg-[#97144d] rounded-full shadow-[0_0_15px_#97144d]"></div>
-              {/* Reflection glint */}
-              <div className="absolute top-2.5 right-2.5 w-1 h-1 bg-white rounded-full opacity-80"></div>
-            </div>
-
+            {/* REAL IMAGE LOGO */}
+            <img 
+  src="/pyrrho-logo.svg?v=1" 
+  alt="Pyrrho Logo" 
+  className="w-10 h-10 object-contain"
+/>
             <div>
-              <h1 className="text-3xl font-semibold text-white tracking-tight leading-none">Pyrrho</h1>
+              <h1 className="text-3xl font-semibold text-white tracking-tight leading-none uppercase">Pyrrho</h1>
               <p className="text-[10px] text-[#97144d] uppercase tracking-[0.2em] font-bold mt-1.5">Skeptic Engine</p>
             </div>
           </div>
@@ -133,16 +127,16 @@ export default function Home() {
                 <div className="space-y-2 border-l-2 border-[#97144d] pl-4">
                   <p className="text-xs text-gray-400">Context checklist:</p>
                   <ul className="text-[11px] text-gray-500 space-y-0.5">
-                    <li className="flex items-center gap-2">• Target User Role</li>
-                    <li className="flex items-center gap-2">• Physical/Digital Environment</li>
-                    <li className="flex items-center gap-2">• Observed or Suspected Friction</li>
+                    <li>• Target User Role</li>
+                    <li>• Physical/Digital Environment</li>
+                    <li>• Observed or Suspected Friction</li>
                   </ul>
                 </div>
               </div>
               
               <textarea 
-                className="w-full h-56 bg-black/40 border border-white/10 rounded-lg p-5 text-gray-200 focus:outline-none focus:border-[#97144d] focus:ring-1 focus:ring-[#97144d] transition-all resize-none"
-                placeholder="Ex: We are observing logistics managers in a warehouse setting. They are using the handheld scanner to log inventory but seem to be skipping steps when the wifi drops, leading to data mismatches..."
+                className="w-full h-56 bg-black/40 border border-white/10 rounded-lg p-5 text-gray-200 focus:outline-none focus:border-[#97144d] transition-all resize-none"
+                placeholder="Ex: We are observing logistics managers in a warehouse setting. They are using the handheld scanner to log inventory but seem to be skipping steps when the wifi drops..."
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
               />
@@ -151,13 +145,14 @@ export default function Home() {
             <button 
               onClick={handleGenerate}
               disabled={loading || !context.trim()}
-              className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] disabled:opacity-40 transition-all shadow-[0_0_20px_rgba(151,20,77,0.2)]"
+              className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] disabled:opacity-40 transition-all"
             >
               {loading ? 'Synthesizing...' : 'Extract & Generate Guide'}
             </button>
           </div>
         ) : (
-          <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+          <div className="space-y-8">
+            {/* Phase 1, Assumption Check, and Modules render here exactly as before */}
             <div className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5 shadow-lg">
               <h2 className="text-[10px] text-[#97144d] uppercase tracking-widest mb-4 font-bold border-b border-white/5 pb-2">Phase 1: Extracted Variables</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -172,7 +167,6 @@ export default function Home() {
 
             <div className="bg-[#97144d]/10 border border-[#97144d]/30 rounded-xl p-5">
                <h2 className="text-[10px] text-[#97144d] uppercase tracking-widest mb-1 font-bold">Assumption Check</h2>
-               <p className="text-xs text-gray-400 mb-3 tracking-wide">Pyrrho detected a potential bias in your context:</p>
                <p className="text-sm font-medium text-gray-200 italic leading-relaxed">"{data.blind_spot}"</p>
             </div>
 
@@ -196,9 +190,8 @@ export default function Home() {
                   <div className="space-y-4">
                     {mod.questions.map((q: any, j: number) => (
                       <div key={j} className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5 shadow-md">
-                        <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-bold">Psychology: {q.rationale}</p>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-bold tracking-wide">Psychology: {q.rationale}</p>
                         <p className="text-lg text-gray-100 font-medium mb-4">{q.primary}</p>
-                        
                         <div className="flex flex-col md:flex-row gap-3 mt-4">
                           <div className="flex-1 bg-black/40 rounded-lg p-4 border border-white/5">
                             <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 font-bold italic">If off-track</p>
@@ -225,16 +218,10 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-3 pt-6 border-t border-white/10">
-              <button 
-                onClick={exportToCSV}
-                className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all"
-              >
+              <button onClick={exportToCSV} className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all">
                 Download Field Guide (CSV)
               </button>
-              <button 
-                onClick={() => { setData(null); setContext(''); }} 
-                className="w-full py-4 bg-transparent border border-white/10 text-gray-400 rounded-xl text-sm font-medium hover:bg-white/5 transition-colors"
-              >
+              <button onClick={() => { setData(null); setContext(''); }} className="w-full py-4 bg-transparent border border-white/10 text-gray-400 rounded-xl text-sm font-medium transition-colors">
                 Reset Engine
               </button>
             </div>

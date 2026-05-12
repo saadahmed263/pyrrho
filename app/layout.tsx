@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Pyrrho | Skeptic Engine",
-  description: "Behavioral Psych Interview Architect",
+  title: "Pyrrho",
+  description: "Behavioral Psych Engine",
   icons: {
-    icon: [], // This forces Next.js to stop looking for that default triangle icon
+    icon: '/pyrrho-logo.svg?v=999', // This forces the browser to download a fresh file
+    apple: '/pyrrho-logo.svg?v=999',
   },
 };
 
