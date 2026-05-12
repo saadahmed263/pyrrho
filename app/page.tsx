@@ -104,15 +104,19 @@ export default function Home() {
       <div className="max-w-3xl mx-auto space-y-8 relative z-10 animate-in fade-in duration-500">
         
        <header className="relative z-50 border-b border-white/10 pb-6 flex justify-between items-end">
-          <div className="flex items-center gap-3">
-            {/* The Skeptic's Lens Logo */}
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 border-2 border-[#97144d] rounded-full opacity-30 animate-pulse"></div>
-              <div className="absolute inset-1 border border-[#97144d]/50 rounded-full"></div>
-              <div className="w-3 h-3 bg-[#97144d] rounded-full shadow-[0_0_15px_rgba(151,20,77,1)]"></div>
-              {/* Refraction glint */}
-              <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-white/80 rounded-full"></div>
+          <div className="flex items-center gap-4">
+            {/* THE SKEPTIC LENS - LOGO */}
+            <div className="relative w-10 h-10">
+              {/* Outer ring */}
+              <div className="absolute inset-0 border-2 border-[#97144d] rounded-full opacity-20"></div>
+              {/* Middle ring */}
+              <div className="absolute inset-1.5 border border-[#97144d]/40 rounded-full animate-pulse"></div>
+              {/* Inner pupil */}
+              <div className="absolute inset-[13px] bg-[#97144d] rounded-full shadow-[0_0_15px_#97144d]"></div>
+              {/* Reflection glint */}
+              <div className="absolute top-2.5 right-2.5 w-1 h-1 bg-white rounded-full opacity-80"></div>
             </div>
+
             <div>
               <h1 className="text-3xl font-semibold text-white tracking-tight leading-none">Pyrrho</h1>
               <p className="text-[10px] text-[#97144d] uppercase tracking-[0.2em] font-bold mt-1.5">Skeptic Engine</p>
