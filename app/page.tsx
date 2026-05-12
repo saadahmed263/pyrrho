@@ -48,7 +48,6 @@ export default function Home() {
     window.URL.revokeObjectURL(url);
   };
 
-  // Dynamically count ONLY the primary questions
   const totalPrimaryQuestions = data ? data.modules.reduce((sum: number, mod: any) => sum + mod.questions.length, 0) : 0;
 
   if (showSplash) {
@@ -57,38 +56,33 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#97144d]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div className="max-w-xl space-y-8 animate-in fade-in zoom-in duration-700 relative z-10">
-          <div>
-            <h1 className="text-4xl font-semibold text-white tracking-tight mb-2">Pyrrho</h1>
+          <div className="space-y-1">
+            <h1 className="text-4xl font-semibold text-white tracking-tight">Pyrrho</h1>
             <p className="text-[#97144d] font-medium tracking-wide text-sm uppercase">Behavioral Psych Engine</p>
+            <p className="text-xs italic text-gray-500 mt-4 border-l border-gray-800 pl-4 py-1">
+              "Nothing is more one thing than another." — Named after Pyrrho of Elis, the father of skepticism who believed in suspending judgment to find clarity.
+            </p>
           </div>
           
           <div className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-6 space-y-6 shadow-2xl">
             <p className="text-sm text-gray-300 leading-relaxed">
-              Stop poisoning your own research with leading questions. Pyrrho acts as a skeptic. It forces you to cross-examine your own project brief, extracts the hard variables, and outputs a critical-incident interview guide.
+              Pyrrho acts as a skeptic to strip bias from your project brief. It extracts hard variables and outputs a critical-incident interview guide designed to bypass post-rationalization.
             </p>
             
             <div className="space-y-5">
-              <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full border border-gray-700 bg-black/50 text-xs flex items-center justify-center font-bold text-gray-400 shrink-0 mt-0.5">1</div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">Dump Raw Notes</h3>
-                  <p className="text-xs text-gray-500 mt-1">Paste your messy assumptions and field observations.</p>
+              {[
+                { title: "Dump Raw Notes", desc: "Paste messy assumptions and field observations." },
+                { title: "Isolate Variables", desc: "Define exactly who, where, and what is failing." },
+                { title: "Build the Guide", desc: "Generate behavioral probes and observational tasks." }
+              ].map((step, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <div className="w-6 h-6 rounded-full border border-gray-700 bg-black/50 text-[10px] flex items-center justify-center font-bold text-gray-400 shrink-0 mt-0.5">{i+1}</div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{step.title}</h3>
+                    <p className="text-xs text-gray-500 mt-1">{step.desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full border border-gray-700 bg-black/50 text-xs flex items-center justify-center font-bold text-gray-400 shrink-0 mt-0.5">2</div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">Isolate Variables</h3>
-                  <p className="text-xs text-gray-500 mt-1">Forces you to define exactly who, where, and what is failing.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full border border-gray-700 bg-black/50 text-xs flex items-center justify-center font-bold text-gray-400 shrink-0 mt-0.5">3</div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">Build the Guide</h3>
-                  <p className="text-xs text-gray-500 mt-1">Generates behavioral probes and observational tasks.</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -96,7 +90,7 @@ export default function Home() {
             onClick={() => setShowSplash(false)}
             className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all shadow-[0_0_20px_rgba(151,20,77,0.3)]"
           >
-            Boot Pyrrho
+            Initialize Engine
           </button>
         </div>
       </main>
@@ -114,30 +108,24 @@ export default function Home() {
           <span className="text-[10px] text-gray-500 uppercase tracking-widest">Active Session</span>
         </header>
         
-        {errorMsg && (
-          <div className="p-4 bg-red-950/40 backdrop-blur-md border border-red-900 text-red-400 rounded-lg text-sm">
-            {errorMsg}
-          </div>
-        )}
-
         {!data ? (
           <div className="space-y-6">
             <div className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-6 space-y-4 shadow-xl">
-              <div>
-                <label className="text-sm font-medium text-white block mb-3">Research Context</label>
-                <div className="flex flex-col gap-1 mb-5 border-l-2 border-[#97144d] pl-4">
-                  <p className="text-xs text-gray-400 mb-1">Ensure your context explicitly states:</p>
-                  <ul className="text-xs text-gray-500 list-disc list-inside space-y-1">
-                    <li>The target user role</li>
-                    <li>The specific environment or system</li>
-                    <li>The friction point you suspect</li>
+              <div className="space-y-4">
+                <label className="text-sm font-medium text-white block">Research Context</label>
+                <div className="space-y-2 border-l-2 border-[#97144d] pl-4">
+                  <p className="text-xs text-gray-400">Context checklist:</p>
+                  <ul className="text-[11px] text-gray-500 space-y-0.5">
+                    <li className="flex items-center gap-2">• Target User Role</li>
+                    <li className="flex items-center gap-2">• Physical/Digital Environment</li>
+                    <li className="flex items-center gap-2">• Observed or Suspected Friction</li>
                   </ul>
                 </div>
               </div>
               
               <textarea 
                 className="w-full h-56 bg-black/40 border border-white/10 rounded-lg p-5 text-gray-200 focus:outline-none focus:border-[#97144d] focus:ring-1 focus:ring-[#97144d] transition-all resize-none"
-                placeholder="We are studying the pain points of bank staff. We suspect the main friction is the slow load times of the Cust 360 dashboard when they are talking to customers..."
+                placeholder="Ex: We are observing logistics managers in a warehouse setting. They are using the handheld scanner to log inventory but seem to be skipping steps when the wifi drops, leading to data mismatches..."
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
               />
@@ -146,16 +134,13 @@ export default function Home() {
             <button 
               onClick={handleGenerate}
               disabled={loading || !context.trim()}
-              className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] disabled:opacity-40 disabled:hover:bg-[#97144d] transition-all shadow-[0_0_20px_rgba(151,20,77,0.2)]"
+              className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] disabled:opacity-40 transition-all shadow-[0_0_20px_rgba(151,20,77,0.2)]"
             >
               {loading ? 'Synthesizing...' : 'Extract & Generate Guide'}
             </button>
           </div>
         ) : (
-          
           <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-            
-            {/* PHASE 1: GUARDRAILS */}
             <div className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5 shadow-lg">
               <h2 className="text-[10px] text-[#97144d] uppercase tracking-widest mb-4 font-bold border-b border-white/5 pb-2">Phase 1: Extracted Variables</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -168,14 +153,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ASSUMPTION CHECK */}
-            <div className="bg-[#97144d]/10 border border-[#97144d]/30 rounded-xl p-5 shadow-inner">
+            <div className="bg-[#97144d]/10 border border-[#97144d]/30 rounded-xl p-5">
                <h2 className="text-[10px] text-[#97144d] uppercase tracking-widest mb-1 font-bold">Assumption Check</h2>
-               <p className="text-xs text-[#97144d]/70 mb-3">Pyrrho detected a potential bias in your context:</p>
-               <p className="text-sm font-medium text-gray-200 italic">"{data.blind_spot}"</p>
+               <p className="text-xs text-gray-400 mb-3 tracking-wide">Pyrrho detected a potential bias in your context:</p>
+               <p className="text-sm font-medium text-gray-200 italic leading-relaxed">"{data.blind_spot}"</p>
             </div>
 
-            {/* META BAR */}
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex gap-6">
                 <div>
@@ -189,40 +172,33 @@ export default function Home() {
               </div>
             </div>
 
-            {/* PHASE 2: MODULES */}
             <div className="space-y-10">
               {data.modules.map((mod: any, i: number) => (
                 <section key={i} className="space-y-4">
                   <h2 className="text-xl font-medium text-white border-b border-white/10 pb-2">{mod.theme}</h2>
-                  
                   <div className="space-y-4">
                     {mod.questions.map((q: any, j: number) => (
                       <div key={j} className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5 shadow-md">
-                        <p className="text-xs text-gray-500 mb-2 font-medium tracking-wide">Intent: {q.rationale}</p>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-bold">Psychology: {q.rationale}</p>
                         <p className="text-lg text-gray-100 font-medium mb-4">{q.primary}</p>
                         
                         <div className="flex flex-col md:flex-row gap-3 mt-4">
-                          {q.off_track && q.off_track.length > 0 && (
-                            <div className="flex-1 bg-black/40 rounded-lg p-4 border border-white/5">
-                              <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2 font-bold">If they go off-track</p>
-                              <ul className="space-y-1">
-                                {q.off_track.map((pt: string, k: number) => (
-                                  <li key={k} className="text-xs text-gray-500 pl-2 border-l border-gray-700">{pt}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                          
-                          {q.follow_ups && q.follow_ups.length > 0 && (
-                            <div className="flex-1 bg-[#97144d]/10 rounded-lg p-4 border border-[#97144d]/20">
-                              <p className="text-[10px] text-[#97144d] uppercase tracking-widest mb-2 font-bold">To dig deeper</p>
-                              <ul className="space-y-1">
-                                {q.follow_ups.map((pt: string, k: number) => (
-                                  <li key={k} className="text-xs text-gray-300 pl-2 border-l border-[#97144d]/40">{pt}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                          <div className="flex-1 bg-black/40 rounded-lg p-4 border border-white/5">
+                            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 font-bold italic">If off-track</p>
+                            <ul className="space-y-1">
+                              {q.off_track?.map((pt: string, k: number) => (
+                                <li key={k} className="text-xs text-gray-400 pl-2 border-l border-gray-700">{pt}</li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="flex-1 bg-white/5 rounded-lg p-4 border border-white/5">
+                            <p className="text-[10px] text-white uppercase tracking-widest mb-2 font-bold italic">To dig deeper</p>
+                            <ul className="space-y-1">
+                              {q.follow_ups?.map((pt: string, k: number) => (
+                                <li key={k} className="text-xs text-gray-300 pl-2 border-l border-[#97144d]">{pt}</li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -231,25 +207,20 @@ export default function Home() {
               ))}
             </div>
 
-            {/* FOOTER ACTIONS */}
             <div className="flex flex-col gap-3 pt-6 border-t border-white/10">
               <button 
                 onClick={exportToCSV}
-                className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all shadow-[0_0_15px_rgba(151,20,77,0.2)]"
+                className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all"
               >
-                Download CSV (For Google Sheets)
+                Download Field Guide (CSV)
               </button>
               <button 
-                onClick={() => {
-                  setData(null);
-                  setContext('');
-                }} 
+                onClick={() => { setData(null); setContext(''); }} 
                 className="w-full py-4 bg-transparent border border-white/10 text-gray-400 rounded-xl text-sm font-medium hover:bg-white/5 transition-colors"
               >
-                Restart
+                Reset Engine
               </button>
             </div>
-
           </div>
         )}
       </div>
