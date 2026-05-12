@@ -90,7 +90,7 @@ export default function Home() {
             onClick={() => setShowSplash(false)}
             className="w-full py-4 bg-[#97144d] text-white font-semibold rounded-xl hover:bg-[#7a0f3d] transition-all"
           >
-            Initialize Engine
+            Start
           </button>
         </div>
       </main>
