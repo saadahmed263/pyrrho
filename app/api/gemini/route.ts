@@ -7,7 +7,14 @@ export async function POST(req: Request) {
     if (!apiKey) throw new Error("API KEY MISSING: Check .env.local");
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+    // SAFE FALLBACK STRUCTURE FOR ENDPOINTS
+    let model;
+    try {
+      model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    } catch (e) {
+      model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    }
 
     const { context } = await req.json();
 
@@ -54,7 +61,8 @@ export async function POST(req: Request) {
 
     const result = await model.generateContent(prompt);
     let text = await result.response.text();
-    text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+    text = text.replace(/```json/gi, '').replace(/
+```/g, '').trim();
 
     return NextResponse.json(JSON.parse(text));
   } catch (error: any) {
