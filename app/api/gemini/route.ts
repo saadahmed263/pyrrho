@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     if (!apiKey) throw new Error("API KEY MISSING: Check .env.local");
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const { context } = await req.json();
 
