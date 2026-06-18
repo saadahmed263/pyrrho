@@ -8,13 +8,8 @@ export async function POST(req: Request) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Explicitly fallback to 2.0-flash if 1.5-flash-latest fails initialization
-    let model;
-    try {
-      model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-    } catch (e) {
-      model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    }
+    // Switch to the stable 2.0 production engine
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const { context } = await req.json();
 
@@ -61,7 +56,8 @@ export async function POST(req: Request) {
 
     const result = await model.generateContent(prompt);
     let text = await result.response.text();
-    text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+    text = text.replace(/```json/gi, '').replace(/
+```/g, '').trim();
 
     return NextResponse.json(JSON.parse(text));
   } catch (error: any) {
