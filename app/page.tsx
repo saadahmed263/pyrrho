@@ -65,8 +65,6 @@ export default function Home() {
           </div>
           
           <div className="bg-[#121212]/60 backdrop-blur-xl border border-white/5 rounded-xl p-6 space-y-6 shadow-2xl">
-            
-            {/* UPDATED INTRO TEXT - BLUNT AND CLEAR */}
             <p className="text-sm text-gray-300 leading-relaxed">
               Pyrrho forces you to stop guessing. It acts as a skeptic for your project brief, stripping out assumptions to build a targeted interview guide. The goal is to uncover actual user behavior, not just post-rationalized opinions.
             </p>
@@ -132,7 +130,7 @@ export default function Home() {
               
               <textarea 
                 className="w-full h-64 bg-black/40 border border-white/10 rounded-lg p-5 text-gray-200 focus:outline-none focus:border-[#97144d] transition-all resize-none text-sm leading-relaxed"
-                placeholder="Write your brief here. Example structure:&#10;&#10;We are observing a senior logistics manager. They operate in the high-volume, refrigerated section of our distribution warehouse. The environment is loud, and they wear heavy gloves.&#10;&#10;They are using handheld Zebra scanners to log inventory, but intermittent Wi-Fi drops cause the system to hang. To keep up with the conveyor belt speed, we suspect they are manually skipping the scan-confirmation step, leading to untracked incoming pallets..."
+                placeholder="Write your brief here. Example structure:&#10;&#10;An elderly user is sitting in a crowded, noisy bank lobby trying to renew a fixed deposit on their phone. The app keeps flashing confusing permission alerts, making them anxious. Because they don't trust the screen, they manually copy the login codes onto a paper notepad. While they are busy writing, the app runs out of time and completely locks them out."
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
               />
