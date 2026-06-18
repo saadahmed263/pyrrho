@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) throw new Error("API KEY MISSING: Check .env.local");
+    if (!apiKey) throw new Error("API KEY MISSING: Check environment variables");
 
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // SAFE FALLBACK STRUCTURE FOR ENDPOINTS
+    // Explicitly fallback to 2.0-flash if 1.5-flash-latest fails initialization
     let model;
     try {
       model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
@@ -61,8 +61,7 @@ export async function POST(req: Request) {
 
     const result = await model.generateContent(prompt);
     let text = await result.response.text();
-    text = text.replace(/```json/gi, '').replace(/
-```/g, '').trim();
+    text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
 
     return NextResponse.json(JSON.parse(text));
   } catch (error: any) {
