@@ -1,15 +1,11 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) throw new Error("API KEY MISSING: Check environment variables");
-
-    const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // This exact string format is required for the v1beta endpoint structure
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    if (!apiKey) {
+      return NextResponse.json({ error: "API KEY MISSING" }, { status: 500 });
+    }
 
     const { context } = await req.json();
 
@@ -26,7 +22,7 @@ export async function POST(req: Request) {
 
       Context: ${context}
       
-      Return ONLY a raw JSON object in this exact format. Do not use markdown blocks:
+      Return ONLY a raw JSON object in this exact format. Do not use markdown blocks or formatting wrappers:
       {
         "guardrails": {
           "Who": "The specific user role",
@@ -54,13 +50,38 @@ export async function POST(req: Request) {
       }
     `;
 
-    const result = await model.generateContent(prompt);
-    let text = await result.response.text();
-    text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+    // Direct fetch to openrouter endpoint to bypass Google's rate-limiting layer
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [
+          { role: "user", content: prompt }
+        ],
+        max_tokens: 4000, // Forces OpenRouter to accept the free tier allocation
+        response_format: { type: "json_object" }
+      })
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Proxy Gateway Error: ${response.status} - ${errText}`);
+    }
 
-    return NextResponse.json(JSON.parse(text));
-  } catch (error: any) {
+    const jsonRes = await response.json();
+    let cleanText = jsonRes.choices[0].message.content.trim();
+    
+    // Clean out any accidental markdown tags if present
+    cleanText = cleanText.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+    return NextResponse.json(JSON.parse(cleanText));
+
+  } catch (error: unknown) {
     console.error("ENGINE CRASH:", error);
-    return NextResponse.json({ error: error.message || "Failed to process." }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Failed to process target workflow.";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
