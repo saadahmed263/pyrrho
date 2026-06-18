@@ -7,9 +7,7 @@ export async function POST(req: Request) {
     if (!apiKey) throw new Error("API KEY MISSING: Check environment variables");
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // Switch to the stable 2.0 production engine
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const { context } = await req.json();
 
@@ -56,8 +54,7 @@ export async function POST(req: Request) {
 
     const result = await model.generateContent(prompt);
     let text = await result.response.text();
-    text = text.replace(/```json/gi, '').replace(/
-```/g, '').trim();
+    text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
 
     return NextResponse.json(JSON.parse(text));
   } catch (error: any) {
