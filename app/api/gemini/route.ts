@@ -7,7 +7,9 @@ export async function POST(req: Request) {
     if (!apiKey) throw new Error("API KEY MISSING: Check environment variables");
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+    // This exact string format is required for the v1beta endpoint structure
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
     const { context } = await req.json();
 
